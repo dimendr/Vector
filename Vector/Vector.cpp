@@ -134,6 +134,35 @@ public:
         if (index >= this->size) return 0;
         return this->arr[index];
     }
+    void remove(int index) {
+
+        if (index == 0) {
+            this->pop_front();
+        }
+        else {
+            if (this->arr == nullptr) {
+                this->size--;
+                int* arr_copy = new int[this->size];
+
+                for (int i = 0; i < index; i++) {
+                    arr_copy[i] = this->arr[i];
+                }
+
+                for (int i = index + 1; i < size + 1; i++) {
+                    arr_copy[i - 1] = this->arr[i];
+                }
+
+                delete[] this->arr;
+                this->arr = new int[this->size];
+
+                for (int i = 0; i < size; i++) {
+                    this->arr[i] = arr_copy[i];
+                }
+
+                delete[] arr_copy;
+            }
+        }
+    }
 
     void clear() {
         if (this->arr == nullptr) {
@@ -156,6 +185,20 @@ public:
         return a;
     }
 
+    /*Vector operator -(int value) {
+        Vector a(this->arr, this->size);
+        a.pop_back();
+        return a;
+    }
+
+    int find(int value) {
+
+    }
+
+    Vector operator -(const Vector& obj) {
+        
+    }*/
+
     ~Vector() {
         if (this->arr == nullptr)
             delete[] this->arr;
@@ -170,12 +213,7 @@ int main() {
     Vector a(d, 5);
     int e[3] = {1, 2, 3};
     Vector b(e, 3);
-    
-    Vector res1 = a + 10;
-    Vector res2 = a + b;
-    
-    res1.print();
-    res2.print();
+    a.remove(1);
     
     a.print();
     
