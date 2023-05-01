@@ -1,7 +1,4 @@
-﻿#include <iostream>
-#include <string>
-#include <array>
-#include <vector>
+#include <iostream>
 using namespace std;
 
 class Vector {
@@ -33,7 +30,9 @@ public:
         for (int i = 0; i < this->size; i++) {
             arr_copy[i] = this->arr[i];
         }
-        delete[] this->arr;
+        if (this->arr == nullptr) {
+            delete[] this->arr;
+        }
 
         this->arr = new int[this->size + 1];
         for (int i = 0; i < this->size; i++) {
@@ -50,7 +49,10 @@ public:
         for (int i = 0; i < this->size; i++) {
             arr_copy[i] = this->arr[i];
         }
-        delete[] this->arr;
+        
+        if (this->arr == nullptr) {
+            delete[] this->arr;
+        }
 
         this->size++;
         this->arr = new int[this->size];
@@ -67,7 +69,11 @@ public:
         for (int i = 0; i < this->size; i++) {
             arr_copy[i] = this->arr[i];
         }
-        delete[] this->arr;
+        
+        if (this->arr == nullptr) {
+            delete[] this->arr;
+        }
+        
         this->arr = new int[this->size];
         for (int i = 0; i < this->size; i++) {
             this->arr[i] = arr_copy[i];
@@ -81,15 +87,19 @@ public:
         for (int i = 1; i < this->size; i++) {
             arr_copy[i - 1] = this->arr[i];
         }
-        delete[] this->arr;
+        
+        if (this->arr == nullptr) {
+            delete[] this->arr;
+        }
+        
         this->size--;
+        
         this->arr = new int[this->size];
         for (int i = 0; i < this->size; i++) {
             this->arr[i] = arr_copy[i];
         }
 
         delete[] arr_copy;
-
     }
 
     void print() {
@@ -103,47 +113,71 @@ public:
         for (int i = 0; i < index; i++) {
             arr_copy[i] = this->arr[i];
         }
+        
         arr_copy[index] = value;
         this->size++;
+        
         for (int i = index + 1; i < this->size; i++) {
             arr_copy[i] = this->arr[i - 1];
         }
         delete[] this->arr;
+        
         this->arr = new int[this->size];
         for (int i = 0; i < this->size; i++) {
             this->arr[i] = arr_copy[i];
         }
+        
         delete[] arr_copy;
-
     }
 
     int at(int index) {
-        if (index > size) return 0;
+        if (index >= this->size) return 0;
         return this->arr[index];
     }
 
     void clear() {
-        delete[] this->arr;
+        if (this->arr == nullptr) {
+            delete[] this->arr;
+        }
         this->arr = new int[0];
         this->size = 0;
     }
+    
+    Vector operator +(int value) {
+        Vector a(this->arr, this->size);
+        a.push_back(value);
+        return a;
+    }
+    
+    Vector operator +(const Vector& obj) {
+        Vector a(this->arr, this->size);
+        for(int i = 0; i < obj.size; i++)
+            a.push_back(obj.arr[i]);
+        return a;
+    }
 
+    ~Vector() {
+        if (this->arr == nullptr)
+            delete[] this->arr;
+        this->size = 0;
+        cout << "DESTRUCTOR" << endl;
+    }
 };
 
 
 int main() {
-    int a[5] = { 1, 2, 3, 4, 5 };
-    Vector ai(a, 5);
-    ai.print();
-    ai.push_back(123);
-    ai.push_front(4321);
-    ai.pop_back();
-    ai.pop_front();
-    ai.print();
-    Vector aj(ai);
-    aj.print();
-    ai.add(12, 3);
-    ai.print();
-
+    int d[5] = {1, 2, 3, 4, 5};
+    Vector a(d, 5);
+    int e[3] = {1, 2, 3};
+    Vector b(e, 3);
+    
+    Vector res1 = a + 10;
+    Vector res2 = a + b;
+    
+    res1.print();
+    res2.print();
+    
+    a.print();
+    
     return 0;
 }
