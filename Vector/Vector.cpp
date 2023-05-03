@@ -189,13 +189,16 @@ public:
         Vector a(this->arr, this->size);
         a.pop_back();
         return a;
-    }
+    }*/
 
     int find(int value) {
+        for (int i = 0; i < this->size; i++) {
 
+            if (value == this->arr[i]) return i;
+        }
     }
 
-    Vector operator -(const Vector& obj) {
+    /*Vector operator -(const Vector& obj) {
         
     }*/
 
@@ -213,8 +216,8 @@ int main() {
     Vector a(d, 5);
     int e[3] = {1, 2, 3};
     Vector b(e, 3);
-    a.remove(1);
-    
+    int index = a.find(3);
+    cout << index << endl;
     a.print();
     
     return 0;
