@@ -140,18 +140,18 @@ public:
             this->pop_front();
         }
         else {
-            if (this->arr == nullptr) {
-                this->size--;
-                int* arr_copy = new int[this->size];
+            if (this->arr != nullptr) {
+                this->size;
+                int* arr_copy = new int[this->size - 1];
 
                 for (int i = 0; i < index; i++) {
                     arr_copy[i] = this->arr[i];
                 }
 
-                for (int i = index + 1; i < size + 1; i++) {
+                for (int i = index + 1; i < size; i++) {
                     arr_copy[i - 1] = this->arr[i];
                 }
-
+                this->size--;
                 delete[] this->arr;
                 this->arr = new int[this->size];
 
@@ -216,8 +216,8 @@ int main() {
     Vector a(d, 5);
     int e[3] = {1, 2, 3};
     Vector b(e, 3);
-    int index = a.find(3);
-    cout << index << endl;
+    
+    a.remove(1);
     a.print();
     
     return 0;
