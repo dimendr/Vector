@@ -141,7 +141,6 @@ public:
         }
         else {
             if (this->arr != nullptr) {
-                this->size;
                 int* arr_copy = new int[this->size - 1];
 
                 for (int i = 0; i < index; i++) {
@@ -185,22 +184,36 @@ public:
         return a;
     }
 
-    /*Vector operator -(int value) {
+    Vector operator -(int value) {
+        
         Vector a(this->arr, this->size);
-        a.pop_back();
+
+        int index = a.find(value);
+
+        if (index == -1) return a;
+        a.remove(index);
+
         return a;
-    }*/
+    }
 
     int find(int value) {
         for (int i = 0; i < this->size; i++) {
 
             if (value == this->arr[i]) return i;
         }
+        return -1;
     }
 
-    /*Vector operator -(const Vector& obj) {
-        
-    }*/
+    Vector operator -(Vector& obj) {
+        Vector a(this->arr, this->size);
+        for (int i = 0; i < obj.size; i++) {
+            
+            int index = obj.find(obj.arr[i]);
+            if (index != -1){ a.remove(index); }
+            
+        }
+        return a;
+    }
 
     ~Vector() {
         if (this->arr == nullptr)
@@ -216,9 +229,9 @@ int main() {
     Vector a(d, 5);
     int e[3] = {1, 2, 3};
     Vector b(e, 3);
+    Vector c = a - b;
     
-    a.remove(1);
-    a.print();
+    c.print();
     
     return 0;
 }
