@@ -102,12 +102,8 @@ public:
         delete[] arr_copy;
     }
 
-    void print() {
-        for (int i = 0; i < this->size - 1; i++) {
-            cout << this->arr[i] << " ";
-        } cout << this->arr[this->size - 1] << endl;
-    }
-
+    void print();
+    
     void add(int value, int index) {
         int* arr_copy = new int[this->size + 1];
         for (int i = 0; i < index; i++) {
@@ -207,10 +203,8 @@ public:
     Vector operator -(Vector& obj) {
         Vector a(this->arr, this->size);
         for (int i = 0; i < obj.size; i++) {
-            
-            int index = obj.find(obj.arr[i]);
+            int index = a.find(obj.arr[i]);
             if (index != -1){ a.remove(index); }
-            
         }
         return a;
     }
@@ -219,9 +213,20 @@ public:
         if (this->arr == nullptr)
             delete[] this->arr;
         this->size = 0;
-        cout << "DESTRUCTOR" << endl;
     }
 };
+
+ostream& operator << (ostream &out, Vector obj) {
+    for (int i = 0; i < obj.get_size(); i++)
+        out << obj.at(i) << " ";
+    return out;
+}
+
+void Vector::print() {
+    for (int i = 0; i < this->size - 1; i++) {
+        cout << this->arr[i] << " ";
+    } cout << this->arr[this->size - 1] << endl;
+}
 
 
 int main() {
@@ -231,6 +236,7 @@ int main() {
     Vector b(e, 3);
     Vector c = a - b;
     
+    cout << c << endl;
     c.print();
     
     return 0;
