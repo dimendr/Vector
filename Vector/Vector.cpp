@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <sstream>
 using namespace std;
 
 class Vector {
@@ -63,6 +65,7 @@ public:
 
         this->arr[0] = n;
     }
+    
     void pop_back() {
         this->size--;
         int* arr_copy = new int[this->size];
@@ -79,7 +82,6 @@ public:
             this->arr[i] = arr_copy[i];
         }
         delete[] arr_copy;
-        
     }
     
     void pop_front() {
@@ -98,7 +100,7 @@ public:
         for (int i = 0; i < this->size; i++) {
             this->arr[i] = arr_copy[i];
         }
-
+        
         delete[] arr_copy;
     }
 
@@ -130,8 +132,8 @@ public:
         if (index >= this->size) return 0;
         return this->arr[index];
     }
+    
     void remove(int index) {
-
         if (index == 0) {
             this->pop_front();
         }
@@ -158,6 +160,11 @@ public:
             }
         }
     }
+    
+    bool isEmpty() {
+        if (this->size < 1) return true;
+        return false;
+    }
 
     void clear() {
         if (this->arr == nullptr) {
@@ -165,6 +172,14 @@ public:
         }
         this->arr = new int[0];
         this->size = 0;
+    }
+    
+    void swap(int index_1, int index_2) {
+        if (index_1 >= 0 && index_2 >= 0 && index_1 < size && index_2 < size) {
+            int temp = arr[index_1];
+            arr[index_1] = arr[index_2];
+            arr[index_2] = temp;
+        }
     }
     
     Vector operator +(int value) {
@@ -222,6 +237,19 @@ ostream& operator << (ostream &out, Vector obj) {
     return out;
 }
 
+istream& operator >> (istream &in, Vector& obj) {
+    string s;
+    getline(in, s);
+    stringstream ss(s);
+    
+    int a;
+    while (ss >> a) {
+        obj.push_back(a);
+    }
+    
+    return in;
+}
+
 void Vector::print() {
     for (int i = 0; i < this->size - 1; i++) {
         cout << this->arr[i] << " ";
@@ -230,14 +258,19 @@ void Vector::print() {
 
 
 int main() {
-    int d[5] = {1, 2, 3, 4, 5};
-    Vector a(d, 5);
-    int e[3] = {1, 2, 3};
-    Vector b(e, 3);
-    Vector c = a - b;
+    Vector a;
+    cin >> a;
+    cout << a << endl;
     
-    cout << c << endl;
-    c.print();
+    for (int i = 0; i < a.get_size(); i++) {
+        for(int j = 0; j < a.get_size() - 1; j++) {
+            if(a.at(j) > a.at(j + 1)) {
+                a.swap(j, j + 1);
+            }
+        }
+    }
+    
+    cout << a << endl;
     
     return 0;
 }
